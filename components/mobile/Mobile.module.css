@@ -341,6 +341,12 @@
   white-space: nowrap;
 }
 
+.backArrow {
+  flex: none;
+  margin-right: 6px;
+  image-rendering: auto;
+}
+
 .backButton:active > span {
   background: #2f2780;
 }

@@ -23,8 +23,8 @@ const title = `${identity.name} — ${identity.title} | Phathu OS`;
 const description = `The CV portfolio of ${identity.name}: ${identity.title}, ${identity.degree}, ${identity.location}. Explore projects, experience and skills inside a retro desktop called Phathu OS.`;
 
 export const metadata: Metadata = {
-  // Set NEXT_PUBLIC_SITE_URL to the deployed address so social previews resolve to absolute URLs.
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  // Social previews need absolute URLs. Override with NEXT_PUBLIC_SITE_URL if the address changes.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://phathu-sigama.me"),
   title,
   description,
   applicationName: "Phathu OS",

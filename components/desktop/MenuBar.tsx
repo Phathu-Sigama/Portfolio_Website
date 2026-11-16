@@ -215,7 +215,7 @@ export default function MenuBar({ menus }: { menus: Menu[] }) {
                             }}
                           >
                             <span className={styles.menuCheck} aria-hidden="true">
-                              {item.checked ? "✓" : ""}
+                              {item.checked ? "✓\uFE0E" : ""}
                             </span>
                             {item.label}
                           </button>

@@ -194,7 +194,11 @@ export default function MobileShell() {
           <header className={styles.navBar}>
             <button type="button" className={styles.backButton} onClick={goHome}>
               <span>
-                <span aria-hidden="true">◀ </span>Home
+                {/* Drawn as a shape: the "◀" character is replaced by a colour emoji on iPhones. */}
+                <svg className={styles.backArrow} width="10" height="12" viewBox="0 0 10 12" aria-hidden="true">
+                  <path d="M10 0v12L0 6z" fill="currentColor" />
+                </svg>
+                Home
               </span>
             </button>
             <h2 id="mobile-app-title" className={styles.navTitle}>

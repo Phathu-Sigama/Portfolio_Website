@@ -23,7 +23,8 @@ All CV content lives in one typed file, [`data/cv.ts`](data/cv.ts). Both interfa
 - **GitHub link** — `contact.github` holds the profile URL used by the mobile dock button and the Contact section.
 - **Certifications** — the list is empty, which shows the "No certifications added yet" state. Add entries to `certifications` when you have them.
 - **CV download** — replace `public/Phathu_Sigama_CV_2026.pdf` (and `contact.cvFile` if the file name changes).
-- **Social previews** — set `NEXT_PUBLIC_SITE_URL` to the deployed address so preview images use absolute URLs.
+- **Social previews** — preview images point at `https://phathu-sigama.me`. Set `NEXT_PUBLIC_SITE_URL` if the
+  address changes.
 
 ## Structure
 
