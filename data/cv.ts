@@ -174,7 +174,7 @@ export const cv: CV = {
 
   projects: [
     {
-      name: "UrbanHive / HiveMind",
+      name: "HiveMind",
       tagline: "Smart Beehive Monitoring Platform",
       status: "Complete",
       context: "University team project · Software Developer",
