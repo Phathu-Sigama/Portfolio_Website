@@ -27,7 +27,7 @@ function BootDialog({ title, status }: { title: string; status: string }) {
       <p className={styles.status}>{status}</p>
       <ul className={styles.icons} aria-hidden="true">
         {sections.map((section, index) => (
-          <li key={section.id} style={{ animationDelay: `${250 + index * 400}ms` }}>
+          <li key={section.id} style={{ animationDelay: `${400 + index * 700}ms` }}>
             <PixelIcon name={section.id} size={40} />
           </li>
         ))}
@@ -38,7 +38,7 @@ function BootDialog({ title, status }: { title: string; status: string }) {
 
 /**
  * The start-up screen. Its timing is pure CSS (see BootScreen.module.css), so it always
- * dismisses itself after ~3.6s — even if JavaScript never loads. JavaScript only adds
+ * dismisses itself after ~5.6s — even if JavaScript never loads. JavaScript only adds
  * "tap to skip", the once-per-session skip (inline script in app/layout.tsx) and Restart.
  */
 export default function BootScreen() {

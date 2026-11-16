@@ -41,7 +41,7 @@ scripts/              generate-logo-assets.py — rebuilds the logo, favicon and
 
 - The start-up screen spins the 3D PS logo (`public/logo.glb`, drawn live with three.js; the flat logo is the fallback),
   is timed purely in CSS
-  (about 3.6s), plays once per browser session, honours
+  (about 5.6s), plays once per browser session, honours
   `prefers-reduced-motion`, and can be clicked to skip. It dismisses itself even if JavaScript fails.
 - Without JavaScript the whole CV is shown as a plain document.
 - The contact form has no backend: it opens a pre-filled draft in the visitor's own email app.

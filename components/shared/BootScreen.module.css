@@ -1,11 +1,11 @@
-/* Self-dismissing start-up screen: total run time ≈ 3.6s, driven only by CSS. */
+/* Self-dismissing start-up screen: total run time ≈ 5.6s, driven only by CSS. */
 
 .boot {
   position: fixed;
   inset: 0;
   z-index: 1000;
   cursor: default;
-  animation: boot-out 3600ms linear forwards;
+  animation: boot-out 5600ms linear forwards;
 }
 
 /* Already played this session → skip entirely. */
@@ -15,7 +15,7 @@
 
 @keyframes boot-out {
   0%,
-  90% {
+  93% {
     opacity: 1;
     visibility: visible;
   }
@@ -103,7 +103,7 @@
   height: 100%;
   background: repeating-linear-gradient(90deg, var(--periwinkle) 0 14px, transparent 14px 16px);
   box-shadow: inset 0 1px 0 var(--periwinkle-light);
-  animation: boot-fill 3000ms steps(16, end) both;
+  animation: boot-fill 5000ms steps(16, end) both;
 }
 
 @keyframes boot-fill {
