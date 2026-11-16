@@ -147,7 +147,7 @@ export default function Desktop() {
   const [notice, setNotice] = useState("");
   const noticeTimer = useRef<number | undefined>(undefined);
   const clock = useClock();
-  const { playing } = useMedia();
+  const { playing, muted } = useMedia();
 
   const active = windows[windows.length - 1]?.id ?? null;
   const { contact } = cv;
@@ -586,24 +586,28 @@ export default function Desktop() {
           ))}
 
         <aside className={styles.controlStrip} aria-label="Control strip">
-          {/* The speaker starts and pauses the Media Player's track from anywhere. */}
+          {/* The speaker mutes the music from anywhere, without opening the Media Player. */}
           <button
             type="button"
             className={`${styles.stripCell} ${styles.stripLink} ${styles.stripSound}`}
-            aria-pressed={playing}
-            title={playing ? "Pause music" : "Play music"}
-            onClick={media.toggle}
+            aria-pressed={muted}
+            title={muted ? "Unmute music" : "Mute music"}
+            onClick={media.toggleMute}
           >
             <svg width="44" height="16" viewBox="0 0 44 16" shapeRendering="crispEdges" aria-hidden="true">
               <path d="M2 6h4l5-4v12l-5-4H2z" fill="#000" />
-              <path d="M14 5v6M17 3v10" stroke="#000" strokeWidth="1" fill="none" />
+              {muted ? (
+                <path d="M13 5l6 6M19 5l-6 6" stroke="#c00000" strokeWidth="2" fill="none" shapeRendering="auto" />
+              ) : (
+                <path d="M14 5v6M17 3v10" stroke="#000" strokeWidth="1" fill="none" />
+              )}
               <path
                 d="M23 11h3v3h-3zM28 9h3v5h-3zM33 7h3v7h-3zM38 4h3v10h-3z"
-                fill={playing ? "#b4f000" : "#fff"}
+                fill={muted ? "#999" : playing ? "#b4f000" : "#fff"}
                 stroke="#000"
               />
             </svg>
-            <span className="sr-only">Music</span>
+            <span className="sr-only">Mute music</span>
           </button>
           <time className={styles.stripCell} dateTime={clock.iso} suppressHydrationWarning>
             {clock.time}
