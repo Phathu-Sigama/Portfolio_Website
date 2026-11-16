@@ -1,25 +1,17 @@
 "use client";
 
 import PsLogo from "@/components/shared/PsLogo";
-import { useMedia } from "@/components/shared/mediaStore";
 import { useClock } from "@/components/shared/useClock";
 import styles from "./Mobile.module.css";
 
 /** The black phone status bar. Signal and battery are decorative. */
 export default function StatusBar() {
   const clock = useClock();
-  const { playing } = useMedia();
   return (
     <div className={styles.statusBar}>
       <span className={styles.carrier}>
         <PsLogo height={20} />
         PHATHU
-        {/* A note appears while the Media Player's track is playing. */}
-        {playing && (
-          <svg className={styles.statusNote} width="12" height="14" viewBox="0 0 12 14" shapeRendering="crispEdges" role="img" aria-label="Music playing">
-            <path d="M4 0h8v3H6v8H4zM0 9h6v5H0zM10 3h2v6h-2zM6 7h6v5H6z" fill="#b4f000" />
-          </svg>
-        )}
       </span>
       <time className={styles.statusTime} dateTime={clock.iso} suppressHydrationWarning>
         {clock.time}

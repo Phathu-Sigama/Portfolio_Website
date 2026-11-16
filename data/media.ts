@@ -1,16 +1,14 @@
-/** The track played by the Media Player (desktop window and mobile app). */
+/** The video played by the Media Player (desktop window and mobile app), embedded from YouTube. */
 export interface Track {
   title: string;
-  /** Shown under the title. */
+  /** The creator, shown under the title. */
   credit: string;
-  src: string;
-  /** Length in seconds, so the player can show it before the file has been downloaded. */
-  seconds: number;
+  /** YouTube video id: the part after "v=" or "/embed/". */
+  videoId: string;
 }
 
 export const track: Track = {
   title: "A Dime A Dozen",
-  credit: "Alchemist x Westside Gunn type beat",
-  src: "/audio/a-dime-a-dozen.mp3",
-  seconds: 170,
+  credit: "OldSouly",
+  videoId: "QqO6RhmD_U8",
 };

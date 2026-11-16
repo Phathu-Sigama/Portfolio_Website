@@ -39,10 +39,6 @@
   justify-content: flex-end;
 }
 
-.statusNote {
-  flex: none;
-}
-
 .statusTime {
   min-width: 5ch;
   text-align: center;
@@ -396,6 +392,39 @@
 .settingsActions {
   display: grid;
   gap: 10px;
+}
+
+/* ───────── Media Player layer (kept mounted so the music never restarts) ───────── */
+
+/* Full size: fills the Media Player app, below the status and navigation bars. */
+.mediaFull {
+  position: absolute;
+  inset: calc(77px + env(safe-area-inset-top)) 0 0;
+  z-index: 11;
+  overflow: hidden auto;
+  padding: 12px 12px calc(20px + env(safe-area-inset-bottom));
+}
+
+.mediaFull > div {
+  padding: 12px;
+  border: 1px solid #8f90a8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 #fff;
+}
+
+/* Mini: floats above the dock while the visitor browses. */
+.mediaMini {
+  position: absolute;
+  right: 8px;
+  bottom: calc(112px + env(safe-area-inset-bottom));
+  z-index: 11;
+  width: 176px;
+  overflow: hidden;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background: #000;
+  box-shadow: 0 0 0 1px #938ce0, 0 3px 8px rgb(0 0 0 / 60%);
 }
 
 /* ───────── Alert dialog ───────── */

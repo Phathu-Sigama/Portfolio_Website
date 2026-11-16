@@ -4,7 +4,6 @@ import { useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cv, isSectionId, sections, type SectionId } from "@/data/cv";
 import AboutText from "@/components/shared/AboutText";
 import MediaPlayer from "@/components/shared/MediaPlayer";
-import { media, useMedia } from "@/components/shared/mediaStore";
 import { restartBoot } from "@/components/shared/BootScreen";
 import { noteSectionOpened, onOpenSectionRequest } from "@/components/shared/HirePrompt";
 import PixelIcon, { type IconName } from "@/components/shared/PixelIcon";
@@ -147,7 +146,6 @@ export default function Desktop() {
   const [notice, setNotice] = useState("");
   const noticeTimer = useRef<number | undefined>(undefined);
   const clock = useClock();
-  const { playing } = useMedia();
 
   const active = windows[windows.length - 1]?.id ?? null;
   const { contact } = cv;
@@ -446,7 +444,7 @@ export default function Desktop() {
       case "social":
         return <SocialLinks />;
       case "media":
-        return <MediaPlayer />;
+        return <MediaPlayer hint="Leave this window open, or minimize it, and the music keeps playing while you browse. Closing it stops the music." />;
       case "trash":
         return (
           <div className={`${contentStyles.content} ${contentStyles.empty}`}>
@@ -576,24 +574,24 @@ export default function Desktop() {
         ))}
 
         <aside className={styles.controlStrip} aria-label="Control strip">
-          {/* The speaker starts and pauses the Media Player's track from anywhere. */}
+          {/* The speaker opens the Media Player. */}
           <button
             type="button"
             className={`${styles.stripCell} ${styles.stripLink} ${styles.stripSound}`}
-            aria-pressed={playing}
-            title={playing ? "Pause music" : "Play music"}
-            onClick={media.toggle}
+            aria-haspopup="dialog"
+            title={`Open ${TITLES.media}`}
+            onClick={() => open("media")}
           >
             <svg width="44" height="16" viewBox="0 0 44 16" shapeRendering="crispEdges" aria-hidden="true">
               <path d="M2 6h4l5-4v12l-5-4H2z" fill="#000" />
               <path d="M14 5v6M17 3v10" stroke="#000" strokeWidth="1" fill="none" />
               <path
                 d="M23 11h3v3h-3zM28 9h3v5h-3zM33 7h3v7h-3zM38 4h3v10h-3z"
-                fill={playing ? "#b4f000" : "#fff"}
+                fill="#fff"
                 stroke="#000"
               />
             </svg>
-            <span className="sr-only">Music</span>
+            <span className="sr-only">{TITLES.media}</span>
           </button>
           <time className={styles.stripCell} dateTime={clock.iso} suppressHydrationWarning>
             {clock.time}
