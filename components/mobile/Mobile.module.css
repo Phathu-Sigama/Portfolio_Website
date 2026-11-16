@@ -1,0 +1,422 @@
+/* ═════════ Phathu Mobile — early-smartphone interface (< 768px) ═════════ */
+
+.phone {
+  position: fixed;
+  inset: 0;
+  background: var(--wall-mobile);
+  font-family: var(--font-chicago);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ───────── Status bar ───────── */
+
+.statusBar {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  height: calc(30px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 10px 0;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-chicago);
+  font-size: 17px;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.carrier,
+.statusRight {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.statusRight {
+  justify-content: flex-end;
+}
+
+.statusTime {
+  min-width: 5ch;
+  text-align: center;
+}
+
+/* ───────── Home screen ───────── */
+
+.home {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gridScroll {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden auto;
+  overscroll-behavior: contain;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px 0;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 28px 6px 16px;
+  list-style: none;
+}
+
+.appButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.appButton:active .tile {
+  filter: brightness(0.6);
+}
+
+.appButton:focus-visible {
+  outline: 2px dotted #fff;
+  outline-offset: 0;
+}
+
+.appLabel {
+  font-size: clamp(11px, 3.45vw, 16px);
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px #000, 0 0 1px #000;
+}
+
+/* Skeuomorphic tile: bevelled, glossy, with a hard drop shadow. */
+.tile {
+  --a: #a9a5ec;
+  --b: #5d55b8;
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(56px, 17.5vw, 76px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid rgb(0 0 0 / 70%);
+  border-radius: 22%;
+  background: linear-gradient(var(--a), var(--b));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), inset 0 -2px 3px rgb(0 0 0 / 30%), 0 2px 3px rgb(0 0 0 / 55%);
+}
+
+.tile::after {
+  content: "";
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  top: -60%;
+  height: 108%;
+  border-radius: 50%;
+  background: linear-gradient(rgb(255 255 255 / 55%), rgb(255 255 255 / 12%));
+  pointer-events: none;
+}
+
+.tile svg,
+.tile img {
+  width: 62%;
+  height: auto;
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 45%));
+}
+
+/* The spinning 3D logo inside a tile and at the top of the About app */
+.tile .tileSpin {
+  width: 78%;
+}
+
+.tile .tileSpin img {
+  width: 100%;
+  height: 100%;
+  filter: none;
+}
+
+.aboutSpin {
+  width: 128px;
+  margin: 0 auto 12px;
+}
+
+.tile-about {
+  --a: #f6f6fa;
+  --b: #a9a8c4;
+}
+
+.tile-social {
+  --a: #8fdcc4;
+  --b: #1f8468;
+}
+
+.tile-profile {
+  --a: #fafafa;
+  --b: #b4b4c0;
+}
+
+.tile-education {
+  --a: #7c98f4;
+  --b: #2b47b8;
+}
+
+.tile-projects {
+  --a: #b0acf0;
+  --b: #5d55b8;
+}
+
+.tile-experience {
+  --a: #c8925e;
+  --b: #74441e;
+}
+
+.tile-skills {
+  --a: #a4aebe;
+  --b: #485264;
+}
+
+.tile-certifications {
+  --a: #f4e8c0;
+  --b: #b4944e;
+}
+
+.tile-contact {
+  --a: #86aaf6;
+  --b: #2c50c0;
+}
+
+.tile-settings {
+  --a: #a8a8b2;
+  --b: #44444e;
+}
+
+.tile-home {
+  --a: #9793ee;
+  --b: #463cac;
+}
+
+.tile-document {
+  --a: #f2ead0;
+  --b: #ac9c6a;
+}
+
+.tile-server {
+  --a: #a5a1ee;
+  --b: #4c44ac;
+}
+
+.tile-mail {
+  --a: #84c6fa;
+  --b: #1c68cc;
+}
+
+.dots {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  padding: 10px 0 14px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 40%);
+}
+
+.dots .dotActive {
+  background: #fff;
+}
+
+.dock {
+  flex: none;
+  padding: 10px 6px calc(6px + env(safe-area-inset-bottom));
+  border-top: 1px solid #938ce0;
+  background: linear-gradient(#6158b4, #3a3186 55%, #2c2470);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 25%), 0 -2px 6px rgb(0 0 0 / 35%);
+}
+
+.dock ul {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+/* ───────── Full-screen app ───────── */
+
+.app {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background: repeating-linear-gradient(90deg, #d8d9e8 0 5px, #cfd0e2 5px 7px);
+  animation: app-open 180ms ease-out;
+}
+
+.app:focus {
+  outline: none;
+}
+
+@keyframes app-open {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.navBar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 6px;
+  border-bottom: 1px solid #241c66;
+  background: linear-gradient(#aaa6e8, #7068c4 50%, #5d54b4 50%, #665cb8);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 45%);
+}
+
+.navTitle {
+  position: absolute;
+  left: 96px;
+  right: 96px;
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: var(--bold), 0 -1px 0 rgb(0 0 0 / 55%);
+}
+
+/* 44px hit area around a 32px bevelled button */
+.backButton {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.backButton > span {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid #241c66;
+  border-radius: 6px;
+  background: linear-gradient(#7d76cc, #4d44a6 50%, #3f3698 50%, #4a41a4);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 35%), 0 1px 0 rgb(255 255 255 / 30%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: var(--bold), 0 -1px 0 rgb(0 0 0 / 55%);
+  white-space: nowrap;
+}
+
+.backButton:active > span {
+  background: #2f2780;
+}
+
+.backButton:focus-visible {
+  outline: 2px dotted #fff;
+  outline-offset: -4px;
+}
+
+.appScroll {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden auto;
+  padding: 12px 12px calc(20px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+}
+
+.panel {
+  margin-bottom: 12px;
+  padding: 14px 12px;
+  border: 1px solid #8f90a8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 0 #fff;
+}
+
+.settingsHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.settingsHead p {
+  margin: 0;
+}
+
+.settingsActions {
+  display: grid;
+  gap: 10px;
+}
+
+/* ───────── Alert dialog ───────── */
+
+.alert {
+  width: min(300px, 100vw - 40px);
+  padding: 16px;
+  border: 2px solid #c9c6ee;
+  border-radius: 10px;
+  background: linear-gradient(#5a52ac, #2e2672);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 60%);
+  color: #fff;
+  font-family: var(--font-geneva);
+  text-align: center;
+}
+
+.alert::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+
+.alert h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-chicago);
+  font-size: 20px;
+}
+
+.alert p {
+  margin: 0 0 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app {
+    animation: none;
+  }
+}
+
+.panel > h3 {
+  margin-bottom: 8px;
+}

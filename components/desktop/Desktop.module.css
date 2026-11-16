@@ -1,0 +1,726 @@
+/* ═════════ Phathu OS 9 — desktop & tablet interface (≥ 768px) ═════════ */
+
+.desktop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--wall-desktop);
+  font-family: var(--font-chicago);
+  font-size: 16px;
+  user-select: none;
+}
+
+/* ───────── Menu bar ───────── */
+
+.menuBar {
+  position: relative;
+  z-index: 500;
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  height: var(--menu-h);
+  border-bottom: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 var(--platinum-dark);
+}
+
+.menuList {
+  display: flex;
+  height: 100%;
+  margin: 0;
+  padding: 0 0 0 8px;
+  list-style: none;
+}
+
+.menuRoot {
+  position: relative;
+}
+
+.menuTrigger {
+  display: flex;
+  align-items: center;
+  height: calc(var(--menu-h) - 1px);
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  cursor: default;
+}
+
+.menuTriggerBold {
+  font-weight: 700;
+  text-shadow: var(--bold);
+}
+
+.menuTrigger img {
+  display: block;
+}
+
+.menuTrigger[aria-expanded="true"] {
+  background: var(--select);
+  color: #fff;
+}
+
+.menuTrigger:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: -3px;
+}
+
+.menuTrigger[aria-expanded="true"]:focus-visible {
+  outline-color: #fff;
+}
+
+.menu {
+  position: absolute;
+  top: calc(var(--menu-h) - 1px);
+  left: 0;
+  min-width: 220px;
+  margin: 0;
+  padding: 2px 0;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 var(--platinum-dark), 2px 2px 0 rgb(0 0 0 / 55%);
+  list-style: none;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 26px;
+  padding: 2px 24px 2px 4px;
+  border: 0;
+  background: none;
+  color: #000;
+  font-size: 16px;
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.menuItem:hover,
+.menuItem:focus {
+  background: var(--select);
+  color: #fff;
+  outline: none;
+}
+
+.menuItem[aria-disabled="true"],
+.menuItem[aria-disabled="true"]:hover {
+  background: none;
+  color: #6e6e6e;
+}
+
+.menuCheck {
+  flex: none;
+  width: 20px;
+  text-align: center;
+}
+
+.menuSeparator {
+  height: 1px;
+  margin: 4px 1px;
+  background: #888;
+  box-shadow: 0 1px 0 #fff;
+}
+
+.menuClock {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  min-width: 180px;
+  padding: 0 14px;
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* ───────── Desktop surface ───────── */
+
+.surface {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.osTag {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  margin: 0;
+  padding: 0 7px;
+  border: 1px solid #000;
+  background: #fff;
+  box-shadow: 1px 1px 0 #000;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.desktopIcons {
+  position: absolute;
+  top: 44px;
+  right: 20px;
+  display: grid;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ───────── Icons ───────── */
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 4px;
+  border: 0;
+  background: none;
+  color: #000;
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  cursor: default;
+}
+
+.icon svg {
+  display: block;
+}
+
+.iconLabel {
+  padding: 0 5px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.icon-finder {
+  width: 132px;
+}
+
+.icon-desktop {
+  width: 112px;
+}
+
+.icon-desktop .iconLabel {
+  background: #fff;
+}
+
+.icon-list {
+  flex-direction: row;
+  gap: 8px;
+  padding: 1px 2px;
+  font-size: 16px;
+}
+
+.icon-finder .iconLabel {
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+/* The spinning 3D logo used as the About icon */
+.spinIcon {
+  width: 72px;
+  margin: -4px 0;
+}
+
+.iconSelected svg,
+.iconSelected img,
+.iconSelected canvas {
+  filter: brightness(0.6);
+}
+
+.iconSelected .iconLabel,
+.icon-desktop.iconSelected .iconLabel {
+  background: var(--select);
+  color: #fff;
+}
+
+.icon:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: 0;
+}
+
+.icon-desktop:focus-visible {
+  outline-color: #fff;
+}
+
+/* ───────── Windows ───────── */
+
+.window {
+  --w: min(560px, calc(100vw - 32px));
+
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: var(--w);
+  padding: 0 4px 4px;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999, 1px 1px 0 #000;
+  user-select: text;
+}
+
+.window:focus {
+  outline: none;
+}
+
+.windowCollapsed {
+  padding-bottom: 0;
+}
+
+/* Default positions (used until the visitor drags the window) */
+.placeFinder {
+  --w: min(720px, calc(100vw - 48px));
+
+  left: clamp(16px, 19.6vw, calc(100vw - var(--w) - 16px));
+  top: clamp(36px, 14vh, 120px);
+}
+
+.placeProfile {
+  --w: min(500px, calc(100vw - 32px));
+
+  right: clamp(16px, 7.6vw, 110px);
+  bottom: clamp(52px, 8vh, 68px);
+}
+
+.placeDialog {
+  --w: min(460px, calc(100vw - 32px));
+
+  left: calc(50vw - var(--w) / 2);
+  top: 16vh;
+}
+
+.placeAbout {
+  --w: min(620px, calc(100vw - 32px));
+
+  left: calc(50vw - var(--w) / 2);
+  top: 8vh;
+}
+
+.slot1,
+.slot2,
+.slot3,
+.slot4,
+.slot5,
+.slot6,
+.slot7 {
+  left: min(calc(5vw + var(--slot) * 34px), calc(100vw - var(--w) - 16px));
+  top: calc(20px + var(--slot) * 26px);
+}
+
+.slot1 {
+  --slot: 1;
+}
+
+.slot2 {
+  --slot: 2;
+}
+
+.slot3 {
+  --slot: 3;
+}
+
+.slot4 {
+  --slot: 4;
+}
+
+.slot5 {
+  --slot: 5;
+}
+
+.slot6 {
+  --slot: 6;
+}
+
+.slot7 {
+  --slot: 7;
+}
+
+.windowZoomed {
+  left: 8px !important;
+  top: 8px !important;
+  right: 8px !important;
+  bottom: 48px !important;
+  width: auto;
+}
+
+.windowZoomed.windowCollapsed {
+  bottom: auto !important;
+}
+
+.titleBar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 2px;
+  cursor: default;
+  touch-action: none;
+  user-select: none;
+}
+
+.stripes {
+  flex: 1;
+  height: 12px;
+  min-width: 8px;
+}
+
+.windowActive .stripes {
+  background: repeating-linear-gradient(to bottom, #fff 0 1px, #808080 1px 2px);
+}
+
+.title {
+  flex: none;
+  max-width: 60%;
+  margin: 0;
+  overflow: hidden;
+  font-size: 17px;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  letter-spacing: 0.04em;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #777;
+}
+
+.windowActive .title {
+  color: #000;
+}
+
+/* Close / zoom / minimize boxes: 16px visual, 28px hit area. */
+.box {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid #000;
+  background: linear-gradient(135deg, #9a9a9a, #fff 70%);
+  box-shadow: inset 1px 1px 0 #666, inset -1px -1px 0 #fff;
+  cursor: default;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+}
+
+.box:active {
+  background: #555;
+}
+
+.box:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: 2px;
+}
+
+.closeBox::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background:
+    linear-gradient(45deg, transparent 43%, #000 43% 57%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, #000 43% 57%, transparent 57%);
+}
+
+.zoomBox::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.collapseBox::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 5px;
+  height: 4px;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.windowBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.windowBody[hidden] {
+  display: none;
+}
+
+.windowContent {
+  flex: 1;
+  min-height: 80px;
+  max-height: min(520px, calc(100vh - 300px));
+  padding: 16px 18px;
+  overflow: auto;
+  border: 1px solid #000;
+  background: #fff;
+  box-shadow: -1px -1px 0 #999, 1px 1px 0 #fff;
+}
+
+.placeProfile .windowContent {
+  max-height: clamp(150px, calc(100vh - 560px), 400px);
+}
+
+.windowZoomed .windowContent {
+  max-height: none;
+}
+
+.windowContent:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: -4px;
+}
+
+/* Classic scrollbars (WebKit/Blink); Firefox gets matching colours. */
+.windowContent::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+.windowContent::-webkit-scrollbar-track {
+  background: repeating-conic-gradient(#e6e6e6 0 25%, #f6f6f6 0 50%) 0 0 / 2px 2px;
+  box-shadow: inset 1px 0 0 #000;
+}
+
+.windowContent::-webkit-scrollbar-thumb {
+  border: 1px solid #000;
+  border-right: 0;
+  background:
+    linear-gradient(#4a52b8, #4a52b8) center / 8px 1px no-repeat,
+    linear-gradient(#4a52b8, #4a52b8) center calc(50% - 3px) / 8px 1px no-repeat,
+    linear-gradient(#4a52b8, #4a52b8) center calc(50% + 3px) / 8px 1px no-repeat,
+    var(--periwinkle-light);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 var(--periwinkle);
+}
+
+.windowContent::-webkit-scrollbar-button:single-button {
+  width: 16px;
+  height: 16px;
+  border-left: 1px solid #000;
+  background: var(--platinum) center no-repeat;
+}
+
+.windowContent::-webkit-scrollbar-button:single-button:vertical:decrement {
+  border-bottom: 1px solid #000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M4.5 0 9 6H0z'/%3E%3C/svg%3E");
+}
+
+.windowContent::-webkit-scrollbar-button:single-button:vertical:increment {
+  border-top: 1px solid #000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='6'%3E%3Cpath d='M4.5 6 9 0H0z'/%3E%3C/svg%3E");
+}
+
+.windowContent::-webkit-scrollbar-corner {
+  background: var(--platinum);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .windowContent {
+    scrollbar-color: var(--periwinkle-light) #eee;
+  }
+}
+
+/* ───────── Finder window ───────── */
+
+.finderWindow .windowContent {
+  height: min(350px, calc(100vh - 300px));
+  padding: 0;
+  overflow-y: scroll;
+  user-select: none;
+}
+
+.finderBar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 22px;
+}
+
+.viewToggle {
+  position: relative;
+  z-index: 1;
+  display: flex;
+}
+
+.viewToggle button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
+  color: #000;
+  cursor: default;
+}
+
+.viewToggle button + button {
+  border-left: 0;
+}
+
+.viewToggle button[aria-pressed="true"] {
+  background: var(--periwinkle-light);
+  box-shadow: inset 1px 1px 0 var(--periwinkle);
+}
+
+.finderInfo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+}
+
+.finderGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 30px 8px;
+  justify-items: center;
+  margin: 0;
+  padding: 44px 24px 28px;
+  list-style: none;
+}
+
+.finderList {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.finderList th {
+  padding: 3px 10px;
+  border-bottom: 1px solid #000;
+  background: var(--platinum-light);
+  font-weight: 700;
+  text-shadow: var(--bold);
+  text-align: left;
+}
+
+.finderList td {
+  padding: 4px 10px;
+  border-bottom: 1px solid #e4e4e4;
+  font-family: var(--font-geneva);
+  white-space: nowrap;
+}
+
+.finderList td:first-child {
+  font-family: var(--font-chicago);
+}
+
+.finderList td:last-child {
+  white-space: normal;
+}
+
+/* ───────── About ───────── */
+
+.about {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.about img {
+  flex: none;
+}
+
+/* ───────── Control strip ───────── */
+
+.controlStrip {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 5;
+  display: flex;
+  height: 32px;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999, 1px 1px 0 #000;
+  font-size: 16px;
+  user-select: none;
+}
+
+.stripCell {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-right: 1px solid #888;
+  box-shadow: 1px 0 0 #fff;
+  letter-spacing: 0.04em;
+}
+
+.stripCell:last-child {
+  border-right: 0;
+  box-shadow: none;
+}
+
+.online {
+  padding: 0 8px;
+  border: 1px solid #000;
+  background: var(--platinum-light);
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  line-height: 1.35;
+}
+
+.stripLink {
+  color: #000;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  text-decoration: none;
+}
+
+.stripLink:hover {
+  background: var(--select);
+  color: #fff;
+}
+
+.stripLink:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: -4px;
+}
+
+/* ───────── Tablet / narrow desktop: keep the desktop icons clear of the main window ───────── */
+@media (max-width: 1099.98px) {
+  .desktopIcons {
+    top: 34px;
+    right: 12px;
+    grid-auto-flow: column;
+    gap: 4px;
+  }
+
+  .placeFinder {
+    top: 128px;
+  }
+
+  .finderWindow .windowContent {
+    height: min(330px, calc(100vh - 420px));
+  }
+}
