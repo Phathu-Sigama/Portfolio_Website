@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { cv, isSectionId, sections, type SectionId } from "@/data/cv";
 import AboutText from "@/components/shared/AboutText";
 import MediaPlayer from "@/components/shared/MediaPlayer";
@@ -61,11 +61,6 @@ export default function MobileShell() {
   const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
   const current = apps.find((a) => a.id === hash);
   const app: AppId | null = current?.id ?? null;
-
-  // Once opened, the Media Player stays loaded (shrunk into a corner) until it is stopped,
-  // so the music carries on across the home screen and the other apps.
-  const [mediaOn, setMediaOn] = useState(false);
-  if (app === "media" && !mediaOn) setMediaOn(true);
 
   const gridRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<HTMLElement>(null);
@@ -253,8 +248,9 @@ export default function MobileShell() {
             ) : current.id === "social" ? (
               <SocialLinks />
             ) : current.id === "media" ? (
-              // The player itself is drawn by the media layer below, on top of this empty app.
-              null
+              <div className={styles.panel}>
+                <MediaPlayer />
+              </div>
             ) : current.id === "about" ? (
               <div className={contentStyles.content}>
                 <div className={styles.panel}>
@@ -276,24 +272,6 @@ export default function MobileShell() {
             )}
           </div>
         </section>
-      )}
-
-      {mediaOn && (
-        <div className={app === "media" ? styles.mediaFull : styles.mediaMini}>
-          <MediaPlayer
-            mini={app !== "media"}
-            hint="Go back Home and the video shrinks into a corner, so the music keeps playing while you browse."
-            onExpand={() => {
-              if (app) {
-                window.history.replaceState(window.history.state, "", "#media");
-                window.dispatchEvent(new HashChangeEvent("hashchange"));
-              } else {
-                openApp("media");
-              }
-            }}
-            onStop={() => setMediaOn(false)}
-          />
-        </div>
       )}
 
       <dialog ref={githubDialog} className={styles.alert} aria-labelledby="github-alert-title">
