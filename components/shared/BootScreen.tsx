@@ -77,7 +77,9 @@ export default function BootScreen() {
           </ul>
         </div>
         <p className={styles.footMobile} suppressHydrationWarning>
-          © {YEAR} {cv.identity.name} • Cape Town
+          © {YEAR} {cv.identity.name}
+          <br />
+          Cape Town • Johannesburg
         </p>
       </div>
     </div>

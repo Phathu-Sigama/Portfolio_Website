@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   applicationName: "Phathu OS",
   authors: [{ name: identity.name }],
   creator: identity.name,
-  keywords: [identity.name, identity.title, identity.degree, "CV", "portfolio", "Cape Town"],
+  keywords: [identity.name, identity.title, identity.degree, "CV", "portfolio", "Cape Town", "Johannesburg"],
   openGraph: {
     type: "profile",
     title,

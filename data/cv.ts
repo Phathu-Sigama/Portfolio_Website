@@ -104,7 +104,7 @@ export const cv: CV = {
     name: "Phathu Sigama",
     title: "Software Developer",
     degree: "BCom Information Systems",
-    location: "Cape Town, South Africa",
+    location: "Cape Town & Johannesburg, South Africa",
     expected: "Expected completion: 2026",
   },
 
@@ -259,7 +259,7 @@ export const cv: CV = {
     email: "phathu.sigama23@gmail.com",
     phone: "071-742-6112",
     phoneHref: "tel:+27717426112",
-    location: "Cape Town, South Africa",
+    location: "Cape Town & Johannesburg, South Africa",
     github: "https://github.com/Phathu-Sigama",
     linkedin: "https://www.linkedin.com/in/phathu-sigama-805b82432/",
     cvFile: "/Phathu_Sigama_CV_2026.pdf",
