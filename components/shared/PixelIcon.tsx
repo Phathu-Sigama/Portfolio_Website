@@ -20,6 +20,7 @@ export type IconName =
   | "mail"
   | "help"
   | "social"
+  | "media"
   | "idcard";
 
 const K = "#000";
@@ -34,6 +35,15 @@ const GR = "#b4f000";
 
 function r(x: number, y: number, w: number, h: number, fill: string, key?: string) {
   return <rect key={key ?? `${x}-${y}-${w}-${h}-${fill}`} x={x} y={y} width={w} height={h} fill={fill} />;
+}
+
+/** A filled pixel circle, one row at a time. */
+function disc(cx: number, cy: number, radius: number, fill: string) {
+  return Array.from({ length: radius * 2 }, (_, i) => {
+    const dy = i - radius + 0.5;
+    const half = Math.round(Math.sqrt(radius * radius - dy * dy));
+    return r(cx - half, cy - radius + i, half * 2, 1, fill, `disc-${fill}-${radius}-${i}`);
+  });
 }
 
 function art(name: IconName, uid: string): ReactNode {
@@ -296,6 +306,26 @@ function art(name: IconName, uid: string): ReactNode {
           {r(19, 17, 3, 3, B)}
           {r(24, 17, 3, 3, B)}
           {r(14, 22, 12, 1, G)}
+        </>
+      );
+    case "media":
+      return (
+        <>
+          {/* vinyl record */}
+          {disc(16, 16, 14, K)}
+          {/* grooves catching the light */}
+          {r(8, 6, 4, 1, G)}
+          {r(6, 8, 2, 2, G)}
+          {r(10, 9, 3, 1, D)}
+          {r(9, 10, 1, 2, D)}
+          {r(20, 25, 4, 1, G)}
+          {r(24, 22, 2, 2, G)}
+          {r(19, 22, 3, 1, D)}
+          {r(22, 20, 1, 2, D)}
+          {/* label and spindle hole */}
+          {disc(16, 16, 5, B)}
+          {r(13, 12, 6, 1, L)}
+          {r(15, 15, 2, 2, W)}
         </>
       );
     case "idcard":

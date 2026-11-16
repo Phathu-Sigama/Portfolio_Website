@@ -22,6 +22,8 @@ All CV content lives in one typed file, [`data/cv.ts`](data/cv.ts). Both interfa
 
 - **GitHub link** — `contact.github` holds the profile URL used by the mobile dock button and the Contact section.
 - **Certifications** — the list is empty, which shows the "No certifications added yet" state. Add entries to `certifications` when you have them.
+- **Media Player track** — replace `public/audio/a-dime-a-dozen.mp3` and update the title, credit and length in
+  [`data/media.ts`](data/media.ts).
 - **CV download** — replace `public/Phathu_Sigama_CV_2026.pdf` (and `contact.cvFile` if the file name changes).
 - **Social previews** — preview images point at `https://phathu-sigama.me`. Set `NEXT_PUBLIC_SITE_URL` if the
   address changes.
@@ -34,7 +36,7 @@ data/cv.ts            the single source of CV content
 components/shared/    CV section content, contact form, icons, logo, start-up screen
 components/desktop/   Phathu OS 9: window manager, menu bar, Finder-style window, control strip
 components/mobile/    Phathu Mobile: status bar, home screen, apps, dock
-public/               PS logo, 3D logo model (logo.glb), wallpaper tiles, CV PDF
+public/               PS logo, 3D logo model (logo.glb), wallpaper tiles, CV PDF, Media Player track
 scripts/              generate-logo-assets.py — rebuilds the logo, favicon and wallpaper from its pixel grid
 ```
 

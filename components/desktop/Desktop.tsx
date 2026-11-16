@@ -3,6 +3,8 @@
 import { useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { cv, isSectionId, sections, type SectionId } from "@/data/cv";
 import AboutText from "@/components/shared/AboutText";
+import MediaPlayer from "@/components/shared/MediaPlayer";
+import { media, useMedia } from "@/components/shared/mediaStore";
 import { restartBoot } from "@/components/shared/BootScreen";
 import { noteSectionOpened, onOpenSectionRequest } from "@/components/shared/HirePrompt";
 import PixelIcon, { type IconName } from "@/components/shared/PixelIcon";
@@ -16,7 +18,7 @@ import MenuBar, { type Menu, type MenuItem } from "./MenuBar";
 import Window, { type Point } from "./Window";
 import styles from "./Desktop.module.css";
 
-type WindowId = "finder" | SectionId | "about" | "help" | "trash" | "social";
+type WindowId = "finder" | SectionId | "about" | "help" | "trash" | "social" | "media";
 
 interface WindowState {
   id: WindowId;
@@ -70,6 +72,7 @@ const TITLES: Record<Exclude<WindowId, SectionId>, string> = {
   help: "Phathu OS Help",
   trash: "Trash",
   social: "Social Media",
+  media: "Media Player",
 };
 
 const titleOf = (id: WindowId) =>
@@ -89,6 +92,7 @@ const PLACEMENT: Record<WindowId, string> = {
   help: styles.slot7,
   trash: styles.placeDialog,
   social: styles.placeDialog,
+  media: styles.placeMedia,
 };
 
 /** An icon that selects on single click and opens on double click, Enter/Space or tap. */
@@ -143,6 +147,7 @@ export default function Desktop() {
   const [notice, setNotice] = useState("");
   const noticeTimer = useRef<number | undefined>(undefined);
   const clock = useClock();
+  const { playing } = useMedia();
 
   const active = windows[windows.length - 1]?.id ?? null;
   const { contact } = cv;
@@ -230,6 +235,7 @@ export default function Desktop() {
         ...sections.map((section): MenuItem => ({ label: section.label, onSelect: () => open(section.id) })),
         sep,
         { label: TITLES.social, onSelect: () => open("social") },
+        { label: TITLES.media, onSelect: () => open("media") },
         downloadCv,
       ],
     },
@@ -439,6 +445,8 @@ export default function Desktop() {
         );
       case "social":
         return <SocialLinks />;
+      case "media":
+        return <MediaPlayer />;
       case "trash":
         return (
           <div className={`${contentStyles.content} ${contentStyles.empty}`}>
@@ -517,6 +525,20 @@ export default function Desktop() {
           </li>
           <li>
             <IconButton
+              elementId="desktop-icon-media"
+              icon="media"
+              label={TITLES.media}
+              variant="desktop"
+              selected={selected === "media"}
+              onSelect={() => setSelected("media")}
+              onOpen={() => {
+                setSelected("media");
+                open("media");
+              }}
+            />
+          </li>
+          <li>
+            <IconButton
               elementId="desktop-icon-trash"
               icon="trash"
               label="Trash"
@@ -554,13 +576,25 @@ export default function Desktop() {
         ))}
 
         <aside className={styles.controlStrip} aria-label="Control strip">
-          <span className={styles.stripCell} aria-hidden="true">
-            <svg width="44" height="16" viewBox="0 0 44 16" shapeRendering="crispEdges">
+          {/* The speaker starts and pauses the Media Player's track from anywhere. */}
+          <button
+            type="button"
+            className={`${styles.stripCell} ${styles.stripLink} ${styles.stripSound}`}
+            aria-pressed={playing}
+            title={playing ? "Pause music" : "Play music"}
+            onClick={media.toggle}
+          >
+            <svg width="44" height="16" viewBox="0 0 44 16" shapeRendering="crispEdges" aria-hidden="true">
               <path d="M2 6h4l5-4v12l-5-4H2z" fill="#000" />
               <path d="M14 5v6M17 3v10" stroke="#000" strokeWidth="1" fill="none" />
-              <path d="M23 11h3v3h-3zM28 9h3v5h-3zM33 7h3v7h-3zM38 4h3v10h-3z" fill="#fff" stroke="#000" />
+              <path
+                d="M23 11h3v3h-3zM28 9h3v5h-3zM33 7h3v7h-3zM38 4h3v10h-3z"
+                fill={playing ? "#b4f000" : "#fff"}
+                stroke="#000"
+              />
             </svg>
-          </span>
+            <span className="sr-only">Music</span>
+          </button>
           <time className={styles.stripCell} dateTime={clock.iso} suppressHydrationWarning>
             {clock.time}
           </time>

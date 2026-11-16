@@ -3,6 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { cv, isSectionId, sections, type SectionId } from "@/data/cv";
 import AboutText from "@/components/shared/AboutText";
+import MediaPlayer from "@/components/shared/MediaPlayer";
 import { restartBoot } from "@/components/shared/BootScreen";
 import { noteSectionOpened, onOpenSectionRequest } from "@/components/shared/HirePrompt";
 import PixelIcon, { type IconName } from "@/components/shared/PixelIcon";
@@ -14,11 +15,12 @@ import contentStyles from "@/components/shared/SectionContent.module.css";
 import StatusBar from "./StatusBar";
 import styles from "./Mobile.module.css";
 
-type AppId = SectionId | "settings" | "about" | "social";
+type AppId = SectionId | "settings" | "about" | "social" | "media";
 
 const apps: { id: AppId; label: string; title?: string; icon: IconName }[] = [
   ...sections.map((s) => ({ id: s.id, label: s.label, icon: s.id as IconName })),
   { id: "social", label: "Social Media", icon: "social" },
+  { id: "media", label: "Media Player", icon: "media" },
   { id: "settings", label: "Settings", icon: "settings" },
   // Its tile shows the spinning 3D logo instead of a pixel icon.
   { id: "about", label: "About", title: "About Phathu OS", icon: "help" },
@@ -57,8 +59,8 @@ function Tile({ icon, logo, spin }: { icon?: IconName; logo?: boolean; spin?: bo
 
 export default function MobileShell() {
   const hash = useSyncExternalStore(subscribeToHash, getHash, getServerHash);
-  const app: AppId | null = isSectionId(hash) || hash === "settings" || hash === "about" || hash === "social" ? hash : null;
-  const current = apps.find((a) => a.id === app);
+  const current = apps.find((a) => a.id === hash);
+  const app: AppId | null = current?.id ?? null;
 
   const gridRef = useRef<HTMLDivElement>(null);
   const appRef = useRef<HTMLElement>(null);
@@ -245,6 +247,10 @@ export default function MobileShell() {
               </div>
             ) : current.id === "social" ? (
               <SocialLinks />
+            ) : current.id === "media" ? (
+              <div className={styles.panel}>
+                <MediaPlayer />
+              </div>
             ) : current.id === "about" ? (
               <div className={contentStyles.content}>
                 <div className={styles.panel}>

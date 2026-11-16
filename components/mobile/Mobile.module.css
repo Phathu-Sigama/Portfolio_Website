@@ -39,6 +39,10 @@
   justify-content: flex-end;
 }
 
+.statusNote {
+  flex: none;
+}
+
 .statusTime {
   min-width: 5ch;
   text-align: center;
@@ -157,6 +161,11 @@
 .tile-about {
   --a: #f6f6fa;
   --b: #a9a8c4;
+}
+
+.tile-media {
+  --a: #f8bc7c;
+  --b: #b8501c;
 }
 
 .tile-social {
