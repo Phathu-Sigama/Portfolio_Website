@@ -75,7 +75,9 @@ export default function MobileShell() {
 
   function goHome() {
     if (!app) {
+      // Already on the home screen (the dock's Home button): replay the start-up screen.
       gridRef.current?.scrollTo({ top: 0 });
+      restartBoot();
       return;
     }
     if (window.history.state?.psApp) {
