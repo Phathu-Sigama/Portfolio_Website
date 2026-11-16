@@ -31,6 +31,7 @@ const initial: MediaState = {
 
 let state = initial;
 let audio: HTMLAudioElement | null = null;
+let autoStarted = false;
 const listeners = new Set<() => void>();
 
 function set(patch: Partial<MediaState>) {
@@ -85,6 +86,27 @@ export const media = {
   },
   pause() {
     audio?.pause();
+  },
+  /**
+   * Start the track as the site opens. Browsers refuse sound until the visitor has
+   * interacted with the page, so if that happens the track starts on their first
+   * click, tap or key press instead (usually the one that skips the start-up screen).
+   */
+  autoStart() {
+    if (autoStarted) return;
+    autoStarted = true;
+    const el = element();
+    el.play().catch(() => {
+      const start = () => {
+        el.play().then(stopWaiting, () => {});
+      };
+      const stopWaiting = () => {
+        window.removeEventListener("click", start, true);
+        window.removeEventListener("keydown", start, true);
+      };
+      window.addEventListener("click", start, true);
+      window.addEventListener("keydown", start, true);
+    });
   },
   toggle() {
     if (state.playing) media.pause();

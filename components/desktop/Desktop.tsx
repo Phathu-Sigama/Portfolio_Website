@@ -141,7 +141,7 @@ function IconButton({
 }
 
 export default function Desktop() {
-  const [windows, dispatch] = useReducer(reducer, [fresh("finder"), fresh("profile")]);
+  const [windows, dispatch] = useReducer(reducer, [fresh("finder"), fresh("media"), fresh("profile")]);
   const [selected, setSelected] = useState<string | null>("profile");
   const [view, setView] = useState<"icons" | "list">("icons");
   const [notice, setNotice] = useState("");
@@ -200,6 +200,9 @@ export default function Desktop() {
   }, []);
 
   useEffect(() => () => window.clearTimeout(noticeTimer.current), []);
+
+  // The Media Player opens with the site and its track starts (on phones too: this component is always mounted).
+  useEffect(() => media.autoStart(), []);
 
   // The "Are you impressed?" pop-up can ask for a section (Contact) to be opened.
   useEffect(
@@ -553,7 +556,14 @@ export default function Desktop() {
           </li>
         </ul>
 
-        {windows.map((w, index) => (
+        {/*
+          Stacking is done with z-index, and the elements keep a fixed order. Re-ordering them
+          when a window comes to the front would move it mid-click and swallow that click.
+        */}
+        {windows
+          .map((w, index) => ({ w, index }))
+          .sort((x, y) => x.w.id.localeCompare(y.w.id))
+          .map(({ w, index }) => (
           <Window
             key={w.id}
             id={w.id}
@@ -573,7 +583,7 @@ export default function Desktop() {
           >
             {body(w.id)}
           </Window>
-        ))}
+          ))}
 
         <aside className={styles.controlStrip} aria-label="Control strip">
           {/* The speaker starts and pauses the Media Player's track from anywhere. */}

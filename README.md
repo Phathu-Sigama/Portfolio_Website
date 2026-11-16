@@ -46,6 +46,8 @@ scripts/              generate-logo-assets.py — rebuilds the logo, favicon and
   is timed purely in CSS
   (about 5.6s), plays once per browser session, honours
   `prefers-reduced-motion`, and can be clicked to skip. It dismisses itself even if JavaScript fails.
+- The Media Player's track starts when the site opens. Browsers block sound until the visitor interacts, so in
+  practice it begins on their first click, tap or key press.
 - Without JavaScript the whole CV is shown as a plain document.
 - The contact form has no backend: it opens a pre-filled draft in the visitor's own email app.
 - Keyboard: Tab between icons, menus and windows; Enter/Space opens; Escape closes the focused window or menu;
