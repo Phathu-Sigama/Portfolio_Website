@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import styles from "./WorldClocks.module.css";
 
@@ -172,7 +173,7 @@ export default function WorldClocks({ epoch, date, onClose }: { epoch: number; d
         </button>
       </div>
 
-      <ul className={styles.rows}>
+      <ul className={styles.rows} style={h24 ? undefined : ({ "--time-w": "6.6em" } as React.CSSProperties)}>
         {cities.map((city, index) => {
           const { hour, minute } = wallTime(now, city.zone);
           const local = index === firstLocal;

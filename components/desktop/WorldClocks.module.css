@@ -4,7 +4,7 @@
   position: absolute;
   left: 0;
   bottom: calc(100% + 14px);
-  width: min(520px, calc(100vw - 22px));
+  width: min(540px, calc(100vw - 22px));
   padding: 3px;
   border: 2px solid #000;
   background: var(--platinum);
@@ -153,7 +153,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 26px minmax(0, 1fr) 6.5em 3.6em minmax(90px, 150px) 20px;
+  grid-template-columns: 26px minmax(0, 1fr) var(--time-w, 5.4em) 3.4em minmax(90px, 130px) 20px;
   align-items: center;
   gap: 10px;
   min-height: 42px;
@@ -240,7 +240,7 @@
 
 @media (max-width: 560px) {
   .row {
-    grid-template-columns: 26px minmax(0, 1fr) 6.5em 3.6em 20px;
+    grid-template-columns: 26px minmax(0, 1fr) var(--time-w, 5.4em) 3.4em 20px;
   }
 
   .bar {
