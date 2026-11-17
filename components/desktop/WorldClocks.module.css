@@ -1,0 +1,249 @@
+/* World Clocks: a platinum panel that pops up from the control strip's clock. */
+
+.panel {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 14px);
+  width: min(520px, calc(100vw - 22px));
+  padding: 3px;
+  border: 2px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999, 2px 2px 0 rgb(0 0 0 / 45%);
+  color: #000;
+  font-family: var(--font-chicago);
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.panel:focus {
+  outline: none;
+}
+
+/* The pointer down to the clock button */
+.tail {
+  position: absolute;
+  left: var(--tail-x, 86px);
+  top: 100%;
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+  border-top-color: #000;
+  border-bottom: 0;
+}
+
+.tail::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: -12px;
+  border: 8px solid transparent;
+  border-top-color: var(--platinum);
+  border-bottom: 0;
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 4px 5px;
+}
+
+.globe,
+.close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999;
+}
+
+.globe svg {
+  width: 22px;
+  height: 22px;
+}
+
+.close {
+  padding: 0;
+  cursor: pointer;
+}
+
+.close:active {
+  background: #777;
+}
+
+.stripes {
+  flex: 1;
+  height: 16px;
+  background: repeating-linear-gradient(#fff 0 1px, #999 1px 2px, transparent 2px 3px);
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-shadow: var(--bold);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.dateRow,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 1px solid #000;
+  background: var(--platinum);
+  box-shadow: inset 1px 1px 0 #fff;
+}
+
+.dateRow {
+  border-bottom: 0;
+}
+
+.dateRow p {
+  margin: 0;
+}
+
+.footer {
+  border-top: 0;
+}
+
+.button,
+.select {
+  min-height: 28px;
+  padding: 1px 12px;
+  border: 1px solid #000;
+  border-radius: 0;
+  background: var(--platinum-light);
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #999, 1px 1px 0 #000;
+  color: #000;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.button:active {
+  background: #777;
+  color: #fff;
+  box-shadow: inset 1px 1px 0 #444;
+}
+
+.button:disabled {
+  color: #888;
+  cursor: default;
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  max-height: min(360px, calc(100vh - 260px));
+  overflow-y: auto;
+  border: 1px solid #000;
+  background: #fff;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) 6.5em 3.6em minmax(90px, 150px) 20px;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+  padding: 4px 8px 4px 12px;
+  border-bottom: 1px solid #000;
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.rowLocal {
+  background: #5b4fc4;
+  color: #fff;
+}
+
+.city {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time {
+  padding-left: 10px;
+  border-left: 1px solid #999;
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tag {
+  font-size: 14px;
+}
+
+.rowLocal .time {
+  border-left-color: rgb(255 255 255 / 60%);
+}
+
+.rowLocal .tag {
+  padding-left: 8px;
+  border-left: 1px solid rgb(255 255 255 / 60%);
+}
+
+/* Midnight to midnight: blue night, yellow daylight (06:00–18:00), a tick every three hours. */
+.bar {
+  position: relative;
+  height: 12px;
+  border: 1px solid #000;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(12.5% - 1px), #000 calc(12.5% - 1px) 12.5%) bottom / 100% 4px no-repeat,
+    linear-gradient(90deg, #8f96ee 0 25%, #f4e88c 25% 75%, #8f96ee 75%);
+}
+
+.marker {
+  position: absolute;
+  top: -9px;
+  margin-left: -7px;
+}
+
+.remove {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #000;
+  background: var(--platinum);
+  color: #000;
+  cursor: pointer;
+}
+
+.remove:active {
+  background: #777;
+  color: #fff;
+}
+
+.button:focus-visible,
+.close:focus-visible,
+.remove:focus-visible,
+.select:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 26px minmax(0, 1fr) 6.5em 3.6em 20px;
+  }
+
+  .bar {
+    display: none;
+  }
+}

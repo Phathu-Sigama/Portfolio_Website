@@ -724,6 +724,32 @@
   color: #000;
 }
 
+.stripSound {
+  color: #000;
+  letter-spacing: inherit;
+}
+
+.stripSound:active {
+  background: #777;
+  color: #fff;
+}
+
+.stripClock {
+  font-variant-numeric: tabular-nums;
+}
+
+.stripClockOpen,
+.stripClockOpen:hover {
+  background: var(--periwinkle-light);
+  box-shadow: inset 0 0 0 2px #5b4fc4;
+}
+
+/* Lift the strip above every window while World Clocks is open. */
+.controlStripRaised {
+  z-index: 2000;
+}
+
+.stripSound:focus-visible,
 .stripLink:focus-visible {
   outline: 2px dotted #000;
   outline-offset: -4px;

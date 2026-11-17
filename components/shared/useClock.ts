@@ -21,14 +21,17 @@ export interface Clock {
   date: string;
   /** Machine-readable value for <time dateTime>. */
   iso: string | undefined;
+  /** Start of the current minute in epoch milliseconds; null before hydration. */
+  epoch: number | null;
 }
 
 /** The visitor's local time, updated every minute. Renders a stable placeholder on the server. */
 export function useClock(): Clock {
   const minute = useSyncExternalStore(subscribe, getMinute, getServerMinute);
-  if (minute === null) return { time: "--:--", date: "", iso: undefined };
+  if (minute === null) return { time: "--:--", date: "", iso: undefined, epoch: null };
   const d = new Date(minute * 60000);
   return {
+    epoch: minute * 60000,
     time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
     date: `${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`,
     iso: `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`,

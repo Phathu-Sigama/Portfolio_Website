@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useRef, useState, type ReactNode } from "react";
+import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { cv, isSectionId, sections, type SectionId } from "@/data/cv";
 import AboutText from "@/components/shared/AboutText";
 import MediaPlayer from "@/components/shared/MediaPlayer";
@@ -16,6 +16,7 @@ import { useClock } from "@/components/shared/useClock";
 import contentStyles from "@/components/shared/SectionContent.module.css";
 import MenuBar, { type Menu, type MenuItem } from "./MenuBar";
 import Window, { type Point } from "./Window";
+import WorldClocks from "./WorldClocks";
 import styles from "./Desktop.module.css";
 
 type WindowId = "finder" | SectionId | "about" | "help" | "trash" | "social" | "media";
@@ -95,6 +96,14 @@ const PLACEMENT: Record<WindowId, string> = {
   media: styles.placeMedia,
 };
 
+/* Whether the site currently fills the whole screen (the control strip's monitor button). */
+function subscribeToFullscreen(onChange: () => void) {
+  document.addEventListener("fullscreenchange", onChange);
+  return () => document.removeEventListener("fullscreenchange", onChange);
+}
+const getFullscreen = () => document.fullscreenElement !== null;
+const getServerFullscreen = () => false;
+
 /** An icon that selects on single click and opens on double click, Enter/Space or tap. */
 function IconButton({
   elementId,
@@ -148,6 +157,9 @@ export default function Desktop() {
   const noticeTimer = useRef<number | undefined>(undefined);
   const clock = useClock();
   const { playing, muted } = useMedia();
+  const fullscreen = useSyncExternalStore(subscribeToFullscreen, getFullscreen, getServerFullscreen);
+  const [clocksOpen, setClocksOpen] = useState(false);
+  const clockButton = useRef<HTMLButtonElement>(null);
 
   const active = windows[windows.length - 1]?.id ?? null;
   const { contact } = cv;
@@ -178,6 +190,16 @@ export default function Desktop() {
     setNotice(message);
     window.clearTimeout(noticeTimer.current);
     noticeTimer.current = window.setTimeout(() => setNotice(""), 3000);
+  }
+
+  function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => announce("Full screen is not available"));
+    } else {
+      announce("Full screen is not available");
+    }
   }
 
   function copyEmail() {
@@ -585,7 +607,7 @@ export default function Desktop() {
           </Window>
           ))}
 
-        <aside className={styles.controlStrip} aria-label="Control strip">
+        <aside className={`${styles.controlStrip} ${clocksOpen ? styles.controlStripRaised : ""}`} aria-label="Control strip">
           {/* The speaker mutes the music from anywhere, without opening the Media Player. */}
           <button
             type="button"
@@ -609,16 +631,47 @@ export default function Desktop() {
             </svg>
             <span className="sr-only">Mute music</span>
           </button>
-          <time className={styles.stripCell} dateTime={clock.iso} suppressHydrationWarning>
-            {clock.time}
-          </time>
-          <span className={styles.stripCell} aria-hidden="true">
-            <svg width="20" height="18" viewBox="0 0 20 18" shapeRendering="crispEdges">
+          {/* The clock opens the World Clocks panel. */}
+          <button
+            type="button"
+            ref={clockButton}
+            data-world-clock-toggle
+            className={`${styles.stripCell} ${styles.stripSound} ${styles.stripClock} ${clocksOpen ? styles.stripClockOpen : ""}`}
+            aria-haspopup="dialog"
+            aria-expanded={clocksOpen}
+            title="World Clocks"
+            onClick={() => setClocksOpen((isOpen) => !isOpen)}
+          >
+            <time dateTime={clock.iso} suppressHydrationWarning>
+              {clock.time}
+            </time>
+            <span className="sr-only"> — world clocks</span>
+          </button>
+          {clocksOpen && clock.epoch !== null && (
+            <WorldClocks
+              epoch={clock.epoch}
+              date={clock.date}
+              onClose={(returnFocus) => {
+                setClocksOpen(false);
+                if (returnFocus) clockButton.current?.focus({ preventScroll: true });
+              }}
+            />
+          )}
+          {/* The monitor makes the desktop fill the whole screen, and brings it back. */}
+          <button
+            type="button"
+            className={`${styles.stripCell} ${styles.stripSound}`}
+            aria-pressed={fullscreen}
+            title={fullscreen ? "Leave full screen" : "Full screen"}
+            onClick={toggleFullscreen}
+          >
+            <svg width="20" height="18" viewBox="0 0 20 18" shapeRendering="crispEdges" aria-hidden="true">
               <path d="M2 1h16v11H2z" fill="#fff" stroke="#000" strokeWidth="2" />
-              <path d="M5 4h10v5H5z" fill="#6b74e0" />
+              <path d={fullscreen ? "M3 2h14v9H3z" : "M5 4h10v5H5z"} fill="#6b74e0" />
               <path d="M7 14h6v2H7zM4 16h12v2H4z" fill="#000" />
             </svg>
-          </span>
+            <span className="sr-only">Full screen</span>
+          </button>
           <span className={styles.stripCell}>
             <span className={styles.online}>ONLINE</span>
           </span>
